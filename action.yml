@@ -1,0 +1,36 @@
+name: 'storycap-action'
+description: 'Capture all pages of storybook, static pages, and so on'
+inputs:
+  strategy:
+    description: 'Strategy for server command, currently supported: start-storybook, http-server, none'
+    default: 'start-storybook'
+  path:
+    description: 'Path to serve with http-server strategy'
+    default: 'dist'
+  server_cmd:
+    description: 'Direct config of server_cmd'
+    default: ''
+  port:
+    description: 'Port to capture'
+    default: 9000
+  https:
+    description: 'Usage of https schema'
+    default: false
+  host:
+    description: 'Host to capture'
+    default: 'localhost'
+  working_dir:
+    description: 'Working directory'
+    default: ''
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  entrypoint: '/capture.js'
+  env:
+    STRATEGY: ${{ inputs.strategy }}
+    DIST_PATH: ${{ inputs.path }}
+    SERVER_CMD: ${{ inputs.server_cmd }}
+    PORT: ${{ inputs.port }}
+    HTTPS: ${{ inputs.https }}
+    HOST: ${{ inputs.host }}
+    WORKING_DIR: ${{ inputs.working_dir }}
